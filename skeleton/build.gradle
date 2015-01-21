@@ -1,0 +1,76 @@
+/*
+ * Complete Gradle build file with all available properties of the 'plugindev' block
+ * configured explicitly to bundle and upload a Gradle plugin.
+ */
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'nu.studer:gradle-plugindev-plugin:1.0.3'
+        classpath 'org.codehaus.groovy:groovy-backports-compat23:2.3.5'
+    }
+}
+
+apply plugin: 'nu.studer.plugindev'
+
+group = 'com.fuzz.skeleton'
+version = '1.0.0.RELEASE'
+
+plugindev {
+    pluginId 'com.fuzz.skeleton'
+    pluginName 'skeleton'
+    pluginImplementationClass 'fuzz.com.skeleton.Main'
+    pluginDescription 'Improved resource generating tool for Android.'
+    pluginLicenses 'Apache-2.0'
+    pluginTags 'gradle', 'plugin', 'skeleton', 'xml', 'resources'
+    authorId 'Ilya Gazman'
+    authorName 'Ilya Gazman'
+    authorEmail 'igazman@fuzzproductions.com'
+    projectUrl 'https://github.com/fuzz-productions/skeleton'
+    projectIssuesUrl 'https://github.com/fuzz-productions/skeleton/issues'
+    projectVcsUrl 'https://github.com/fuzz-productions/skeleton.git'
+    projectInceptionYear '2015'
+    pomConfiguration {
+        name 'Skeleton'
+        description 'Improved resource generating tool for Android.'
+        url 'https://github.com/fuzz-productions/skeleton'
+        inceptionYear '2015'
+        licenses {
+            license {
+                name 'MPL V. 2.0 and aditional terms'
+                url 'http://static.fuzzhq.com/licenses/MPL'
+            }
+        }
+        scm {
+            url 'https://github.com/fuzz-productions/skeleton.git'
+        }
+        developers {
+            developer {
+                id 'Ilya Gazman'
+                name 'Ilya Gazman'
+                email 'igazman@fuzzproductions.com'
+            }
+        }
+    }
+    done()
+}
+
+bintray {
+    user = "$BINTRAY_USER"
+    key = "$BINTRAY_API_KEY"
+    pkg{
+        repo = 'gradle-plugins'
+        userOrg = 'fuzz-productions'
+        publicDownloadNumbers = true
+        version {
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = "$GPG_PASSPHARE" //Optional. The passphrase for GPG signing'
+            }
+        }
+    }
+
+
+}
